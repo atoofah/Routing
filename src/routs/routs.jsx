@@ -1,30 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import Home from "../pages";
-import About from "../pages/About";
-import Contact from "../pages/Contact";
 
-const router = createBrowserRouter([
+const routes = [
   {
     path: "/",
-    element: <App />,
+    component: <h1>Home</h1>,
+    isAllowed: "true",
+    redirectTo: "/",
   },
   {
-    path: "/home",
-    element: <Home />,
+    path: "/dashboard",
+    component: <h1>Dashboard</h1>,
+    isAllowed: "false",
+    redirectTo: "/dashboard",
   },
-  {
-    path: "/about",
-    element: <About />,
-  },
-  {
-    path: "/contact",
-    element: <Contact />,
-  },
-  {
-    path: "*",
-    element: <div>404 error</div>,
-  },
-]);
-
-export default router;
+];
+export default routes;

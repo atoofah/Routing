@@ -9,20 +9,23 @@ import PageNotFound from "./pages/PageNotFound";
 import Products from "./pages/Products";
 import Routing from "./pages/Routing";
 import SingleProductPage from "./pages/SingleProductPage";
+import routes from "./routs/routs";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="routing" element={<Routing />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="products" element={<Products />} />
-        <Route path="products/:id" element={<SingleProductPage />} />
-      </Route>
+      {routes.map((route, idx) => (
+        <Route
+          key={idx}
+          path={route.path}
+          element={route.component}
+        ></Route>
+      ))}
 
-      <Route path="*" element={<PageNotFound />} />
+      <Route
+        path="*"
+        element={<PageNotFound />}
+      />
     </Routes>
   );
 }
