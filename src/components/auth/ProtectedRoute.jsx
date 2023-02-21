@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-const protectedRout = ({ isAllowed, redirectTo = "/", Children }) => {
+const ProtectedRoute = ({ isAllowed, redirectTo = "/", children }) => {
   {
     if (!isAllowed)
       return (
@@ -10,8 +10,8 @@ const protectedRout = ({ isAllowed, redirectTo = "/", Children }) => {
         />
       );
 
-    return Children ? Children : <Outlet />;
+    return children ? children : <Outlet />;
   }
 };
 
-export default protectedRout;
+export default ProtectedRoute;

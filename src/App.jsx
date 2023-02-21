@@ -1,33 +1,50 @@
 import { Route, Routes } from "react-router-dom";
-import Layout from "./layout/Layout";
-import ProductsLayout from "./layout/ProductsLayout";
-import Home from "./pages";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
-import About from "./pages/About";
-import Contact from "./pages/Contact";
+import Navbar from "./layout/Navbar";
+import Login from "./pages/Login";
+
 import PageNotFound from "./pages/PageNotFound";
-import Products from "./pages/Products";
-import Routing from "./pages/Routing";
-import SingleProductPage from "./pages/SingleProductPage";
-import routes from "./routs/routs";
 
-function App() {
+import routes from "./routes/routes";
+
+const App = () => {
   return (
-    <Routes>
-      {routes.map((route, idx) => (
+    <>
+      <Routes>
+        {routes.map((route, idx) => (
+          <Route
+            key={idx}
+            path={route.path}
+            element={
+              <ProtectedRoute
+                isAllowed={route.isAllowed}
+                redirectTo={route.redirectTo}
+              >
+                <Navbar />
+                {route.component}
+              </ProtectedRoute>
+            }
+          />
+        ))}
         <Route
-          key={idx}
-          path={route.path}
-          element={route.component}
-        ></Route>
-      ))}
-
-      <Route
-        path="*"
-        element={<PageNotFound />}
-      />
-    </Routes>
+          path="/login"
+          element={
+            <ProtectedRoute
+              isAllowed={true}
+              redirectTo={"/"}
+            >
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="*"
+          element={<PageNotFound />}
+        />
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
