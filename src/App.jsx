@@ -10,9 +10,11 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 
 import routes from "./routes/routes";
+import CookieService from "./services/CookieService";
 
 const App = () => {
   /** Get Cookies */
+  const cookies = CookieService.get("user_token");
   return (
     <>
       <Routes>
@@ -35,7 +37,7 @@ const App = () => {
           path="/login"
           element={
             <ProtectedRoute
-              isAllowed={true}
+              isAllowed={!cookies}
               redirectTo={"/"}
             >
               <Login />

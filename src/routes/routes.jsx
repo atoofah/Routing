@@ -2,6 +2,9 @@ import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
+import CookieService from "../services/CookieService";
+
+const cookies = CookieService.get("user_token");
 
 //** for only pages use NavBar
 
@@ -27,7 +30,7 @@ const routes = [
   {
     path: "/dashboard",
     component: <Dashboard />,
-    isAllowed: false,
+    isAllowed: cookies,
     redirectTo: "/",
   },
 ];
