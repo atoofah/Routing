@@ -12,6 +12,7 @@ import PageNotFound from "./pages/PageNotFound";
 import routes from "./routes/routes";
 
 const App = () => {
+  /** Get Cookies */
   return (
     <>
       <Routes>

@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import CookieService from "../../services/CookieService";
 
 const LoginPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -16,6 +19,7 @@ const LoginPage = () => {
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log(user);
     // ** username: 'kminchelle',
     // ** password: '0lelplR',
@@ -34,6 +38,13 @@ const LoginPage = () => {
           progress: undefined,
           theme: "dark",
         });
+        const IN_Days = 5;
+        const expireInDays = 1000 * 60 * 60 * 24 * IN_Days;
+        const date = new Date();
+        date.setTime(date.getTime() + expireInDays);
+        const options = { path: "/", expires: date };
+        CookieService.set("user_token", res.data.token, options);
+        window.location.reload(true);
       })
       .catch((err) => {
         toast.error(err.response.data.message, {
@@ -47,7 +58,8 @@ const LoginPage = () => {
           theme: "dark",
         });
         console.log(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -91,8 +103,9 @@ const LoginPage = () => {
       <button
         type="submit"
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        disabled={isLoading}
       >
-        Submit
+        {isLoading ? "Loading..." : "Submit"}
       </button>
     </form>
   );
