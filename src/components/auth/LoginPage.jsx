@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import {useState} from "react";
+import {toast} from "react-toastify";
 import CookieService from "../../services/CookieService";
 
 const LoginPage = () => {
@@ -13,9 +13,9 @@ const LoginPage = () => {
 
   /* ------- HANDLER -------  */
   const onChangeHandler = (e) => {
-    const { name, value } = e.target;
+    const {name, value} = e.target;
 
-    setUser({ ...user, [name]: value });
+    setUser({...user, [name]: value});
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ const LoginPage = () => {
     // ** password: '0lelplR',
     axios
       .post("https://dummyjson.com/auth/login", user, {
-        headers: { "Content-Type": "application/json" },
+        headers: {"Content-Type": "application/json"},
       })
       .then((res) => {
         toast.success("Logged in Successfully", {
@@ -42,9 +42,9 @@ const LoginPage = () => {
         const expireInDays = 1000 * 60 * 60 * 24 * IN_Days;
         const date = new Date();
         date.setTime(date.getTime() + expireInDays);
-        const options = { path: "/", expires: date };
+        const options = {path: "/", expires: date};
         CookieService.set("user_token", res.data.token, options);
-        window.location.reload(true);
+        setTimeout(() => window.location.reload(), 850);
       })
       .catch((err) => {
         toast.error(err.response.data.message, {
